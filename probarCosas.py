@@ -46,7 +46,6 @@ import re
 
 
 
-lista = ['david','sdfdsf']
-
-if('da' in lista[0][0:1]):
-    print('xd')
+cadena = 'david'
+subcadena = cadena[len(cadena)]
+print(subcadena)
