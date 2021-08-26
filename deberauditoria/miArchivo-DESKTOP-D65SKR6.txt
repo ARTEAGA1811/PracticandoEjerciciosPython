@@ -1,0 +1,6 @@
+CK__authors__au_id__24927208
+CK__authors__zip__267ABA7A
+CK__publisher__pub_i__29572725
+CK__jobs__min_lvl__403A8C7D
+CK__jobs__max_lvl__412EB0B6
+CK_emp_id
