@@ -45,7 +45,3 @@ import re
 # print(miL)
 
 
-
-cadena = 'david'
-subcadena = cadena[len(cadena)]
-print(subcadena)
