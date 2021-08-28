@@ -22,9 +22,6 @@
 
 
 
-import re
-
-
 # cadena = '999999'
 # num = len(re.findall('(?=99)', cadena))
 
@@ -45,3 +42,10 @@ import re
 # print(miL)
 
 
+
+libro = {1:12, 2:13, 3:14}
+
+if ( 5 in libro):
+    print('si')
+else:
+    print('no')
