@@ -43,9 +43,12 @@
 
 
 
-libro = {1:12, 2:13, 3:14}
+hola = 'sfjksdfds'
+xd = 'gege'
+xd = hola
 
-if ( 5 in libro):
-    print('si')
-else:
-    print('no')
+hola = 'cambioo'
+
+print(hola)
+print(xd)
+
