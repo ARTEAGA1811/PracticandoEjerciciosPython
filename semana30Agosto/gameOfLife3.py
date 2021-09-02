@@ -1,46 +1,49 @@
 
 def reiniciarContadorVivas(regVivas):
-    for key, value in regVivas.items():
-        regVivas[key] = 0
+    listaClaves = list(regVivas.keys()) #['1,2', '3,4', '4,5' ,....]
+    for i in listaClaves:
+        regVivas[i] = 0
 
 def eliminarVivas(regVivas: dict):
-    listaClaves = list(regVivas.keys())
+    listaClaves = list(regVivas.keys()) #['1,2', '3,4', '4,5' ,....]
     for i in listaClaves:
         if(regVivas[i] != 2 and regVivas[i] != 3):
             regVivas.pop(i,-1)
 
 def agregarNuevasVivas(regVivas: dict, regMuertas: dict):
-    listaClaves = list(regMuertas.keys())
+    listaClaves = list(regMuertas.keys()) #['1,2', '3,4', '4,5' ,....]
     for i in listaClaves:
         if(regMuertas[i] == 3):
             regVivas[i] = 0 #agrego a la lista de vivas.
 
 def calcularVivas_Muertas(regVivas: dict, regMuertas: dict, numFil, numCol):
-    listaClaves = list(regVivas.keys()) #['12', '34', '45' ,....]
+    listaClaves = list(regVivas.keys()) #['1,2', '3,4', '4,5' ,....]
     for i in listaClaves:
-        ar = int(i[0]) -1
-        ab = int(i[0]) + 1
-        izq = int(i[1]) -1
-        der = int(i[1]) +1
+        p = i.split(',')
+        a = [int(p[0]), int(p[1])]
+        ar = a[0] -1
+        ab = a[0] + 1
+        izq = a[1] -1
+        der = a[1] +1
         #reviso los limites.
         if(ar<0):
             ar = numFil-1
         if(ab>numFil-1):
             ab = 0
         if(izq<0):
-            izq = -1
+            izq = numCol-1
         if(der>numCol-1):
             der = 0
         #se agregan las celulas muertas.
         #primero se revisa que el vecino no este vivo
-        vecAr= str(ar)+str(i[1])
-        vecAb= str(ab)+str(i[1])
-        vecIzq = str(i[0])+str(izq)
-        vecDer = str(i[0])+str(der)
-        vecSupIz = str(ar)+str(izq)
-        vecSupDer = str(ar)+str(der)
-        vecInfIzq = str(ab)+str(izq)
-        vecInfDer = str(ab)+str(der)
+        vecAr= str(ar)+','+str(a[1])
+        vecAb= str(ab)+','+str(a[1])
+        vecIzq = str(a[0])+','+str(izq)
+        vecDer = str(a[0])+','+str(der)
+        vecSupIz = str(ar)+','+str(izq)
+        vecSupDer = str(ar)+','+str(der)
+        vecInfIzq = str(ab)+','+str(izq)
+        vecInfDer = str(ab)+','+str(der)
         aux = [vecAr,vecAb,vecIzq, vecDer,vecSupIz,vecSupDer, vecInfIzq,vecInfDer]
         for bucle in aux:
             #si el vecino esta muerto lo agrego a regMuertas
@@ -51,15 +54,15 @@ def calcularVivas_Muertas(regVivas: dict, regMuertas: dict, numFil, numCol):
                 else:
                     regMuertas[bucle] = regMuertas[bucle]+1
             else:
-                #si el vecino es un viva, le agrego uno.
-                regVivas[bucle] = regVivas[bucle] +1
+                #si el vecino es un viva, agrego uno a mi.
+                regVivas[i] = regVivas[i] +1
 
 def generarMatrizFinal(regVivas: dict, numFil, numCol):
     nuevaMatriz = []
     for i in range(numFil):
         aux = ''
         for k in range(numCol):
-            if(str(i)+str(k) in regVivas):
+            if(str(i)+','+str(k) in regVivas):
                 aux+='*'
             else:
                 aux+='-'
@@ -75,7 +78,7 @@ def solucionar(arr,c):
         for k in range(numCol):
             #lleno las vivas.
             if(arr[i][k] == '*'):
-                regVivas[str(i)+str(k)] = 0
+                regVivas[str(i)+','+str(k)] = 0
     #empiezo con las iteraciones
     for iter in range(c):
         #en cada iteracion, las regMuertas empiezan de 0, y reinicio los contadores de las vivas
@@ -98,34 +101,34 @@ def solucionar(arr,c):
 
 def testear():
     casosPrueba = [
-        # [   
-        #     [
-        #         '------',
-        #         '------',
-        #         '------',
-        #         '-***--'
-        #     ],3
-        # ],
-        # [
-        #     [
-        #         '------',
-        #         '--*---',
-        #         '---*--',
-        #         '-***--',
-        #         '------'
-        #     ],1000
-        # ],
-        # [
-        #     [
-        #         '---------',
-        #         '---------',
-        #         '---------',
-        #         '--*****--',
-        #         '---------',
-        #         '---------',
-        #         '---------'
-        #     ],5
-        # ],
+        [   
+            [
+                '------',
+                '------',
+                '------',
+                '-***--'
+            ],3
+        ],
+        [
+            [
+                '------',
+                '--*---',
+                '---*--',
+                '-***--',
+                '------'
+            ],1234
+        ],
+        [
+            [
+                '---------',
+                '---------',
+                '---------',
+                '--*****--',
+                '---------',
+                '---------',
+                '---------'
+            ],1000000
+        ],
         [
             [
                 '-----*',
@@ -138,28 +141,28 @@ def testear():
     ]
 
     salidas = [
-        # [
-        #     '--*---',
-        #     '------',
-        #     '--*---',
-        #     '--*---'
-        # ],
-        # [
-        #     '-----*',
-        #     '---*-*',
-        #     '----**',
-        #     '------',
-        #     '------'
-        # ],
-        # [
-        #     '----*----',
-        #     '---***---',
-        #     '--*-*-*--',
-        #     '-***-***-',
-        #     '--*-*-*--',
-        #     '---***---',
-        #     '----*----'
-        # ],
+        [
+            '--*---',
+            '------',
+            '--*---',
+            '--*---'
+        ],
+        [
+            '-----*',
+            '---*-*',
+            '----**',
+            '------',
+            '------'
+        ],
+        [
+            '----*----',
+            '---***---',
+            '--*-*-*--',
+            '-***-***-',
+            '--*-*-*--',
+            '---***---',
+            '----*----'
+        ],
         [
             '**-**-',
             '------',
