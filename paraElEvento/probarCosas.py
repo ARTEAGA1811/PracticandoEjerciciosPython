@@ -42,13 +42,48 @@
 # print(miL)
 
 
+#Cuando se agrega la lista a la matriz ya no cambia por referencia.
 
-hola = 'sfjksdfds'
-xd = 'gege'
-xd = hola
 
-hola = 'cambioo'
 
-print(hola)
-print(xd)
+# aiuda = []
+# xd = [1,2,3,4]
+# aiuda.append(xd)
 
+
+# print(xd)
+# print(aiuda)
+
+# xd =[8,9]
+# aiuda.append(xd)
+# print(xd)
+# print(aiuda)
+
+
+# a = [1,2]
+# b = [3,4]
+
+# aux = [a,b]
+
+# print(aux)
+
+# aux[0] = [9,9]
+
+# print(aux)
+# print(a)
+
+
+# holaDic = 'xd'
+
+# print(holaDic)
+
+# holaDic = 'aa'
+
+# print(holaDic)
+
+a = 1
+b = 3
+holaDic = {}
+holaDic [(a,b)] = 0
+
+print(holaDic)

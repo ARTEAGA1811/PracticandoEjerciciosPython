@@ -1,3 +1,4 @@
+#no sirve se demora mucho,
 def cambiarMatriz(regCambios, arr):
     listaClaves = list(regCambios.keys())
     #print(listaClaves)
@@ -101,7 +102,7 @@ def testear():
                 '--*---',
                 '*-----',
                 '-***-*'
-            ],1
+            ],10000000
         ]
 
     ]

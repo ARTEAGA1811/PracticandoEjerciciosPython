@@ -1,4 +1,4 @@
-
+#hasta ahora este es el mejor. tiempo 10^7 aprox 16 segundos
 def reiniciarContadorVivas(regVivas):
     listaClaves = list(regVivas.keys()) #['1,2', '3,4', '4,5' ,....]
     for i in listaClaves:
