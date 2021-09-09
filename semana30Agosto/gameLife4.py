@@ -1,3 +1,4 @@
+#inconcluso.
 def genMNum (arr, numFil, numCol):
     arrNum = []
     regVivos = []
@@ -47,7 +48,7 @@ def calcularVivas_Muertas(arrNum, regVivas:list, numFil, numCol):
     #ahora tengo que analizar los vecinos muertos.
     #en caso que un vecino cumpla se le agrega a la lista de las vivas,
     for it in vecMuert:
-         
+         pass
         
 
 

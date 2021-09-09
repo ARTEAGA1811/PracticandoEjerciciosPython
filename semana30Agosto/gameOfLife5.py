@@ -1,30 +1,30 @@
-#hasta ahora este es el mejor. tiempo 10^7 aprox 16 segundos
-def reiniciarContadorVivas(regVivas):
-    listaClaves = list(regVivas.keys()) #['1,2', '3,4', '4,5' ,....]
-    for i in listaClaves:
-        regVivas[i] = 0
 
-def eliminarVivas(regVivas: dict):
-    listaClaves = list(regVivas.keys()) #['1,2', '3,4', '4,5' ,....]
+def eliminarYReiniciarVivas(regVivas: dict):
+    #en cada iteracion analizo el diccionario que guarda las vivas, si no cumplen con su condicion, las elimino
+    #del diccionario, en caso que cumplan, reinicio sus valores a 0.
+    listaClaves = list(regVivas.keys()) #[(1,2), (3,4),(4,5) ,....]
     for i in listaClaves:
         if(regVivas[i] != 2 and regVivas[i] != 3):
             regVivas.pop(i,-1)
+        else:
+            regVivas[i] = 0
 
 def agregarNuevasVivas(regVivas: dict, regMuertas: dict):
-    listaClaves = list(regMuertas.keys()) #['1,2', '3,4', '4,5' ,....]
+    #Se analizan los vecinos muertos, en caso que tengan 3 vecinas vivas, los añado al diccionario de las vivas.
+    listaClaves = list(regMuertas.keys()) #[(1,2), (3,4),(4,5) ,....]
     for i in listaClaves:
         if(regMuertas[i] == 3):
             regVivas[i] = 0 #agrego a la lista de vivas.
 
 def calcularVivas_Muertas(regVivas: dict, regMuertas: dict, numFil, numCol):
-    listaClaves = list(regVivas.keys()) #['1,2', '3,4', '4,5' ,....]
+
+    listaClaves = list(regVivas.keys()) #[(1,2), (3,4),(4,5) ,....]
+    #recorro las vivas.
     for i in listaClaves:
-        p = i.split(',')
-        a = [int(p[0]), int(p[1])]
-        ar = a[0] -1
-        ab = a[0] + 1
-        izq = a[1] -1
-        der = a[1] +1
+        ar = i[0] -1
+        ab = i[0] + 1
+        izq = i[1] -1
+        der = i[1] +1
         #reviso los limites.
         if(ar<0):
             ar = numFil-1
@@ -35,16 +35,9 @@ def calcularVivas_Muertas(regVivas: dict, regMuertas: dict, numFil, numCol):
         if(der>numCol-1):
             der = 0
         #se agregan las celulas muertas.
-        #primero se revisa que el vecino no este vivo
-        vecAr= str(ar)+','+str(a[1])
-        vecAb= str(ab)+','+str(a[1])
-        vecIzq = str(a[0])+','+str(izq)
-        vecDer = str(a[0])+','+str(der)
-        vecSupIz = str(ar)+','+str(izq)
-        vecSupDer = str(ar)+','+str(der)
-        vecInfIzq = str(ab)+','+str(izq)
-        vecInfDer = str(ab)+','+str(der)
-        aux = [vecAr,vecAb,vecIzq, vecDer,vecSupIz,vecSupDer, vecInfIzq,vecInfDer]
+
+        #aqui se guardan los 8 vecinos de la celula viva.
+        aux = [(ar,i[1]), (ab,i[1]), (i[0],izq),(i[0],der),(ar,izq),(ar,der),(ab,izq), (ab,der)]
         for bucle in aux:
             #si el vecino esta muerto lo agrego a regMuertas
             if bucle not in regVivas:
@@ -54,15 +47,16 @@ def calcularVivas_Muertas(regVivas: dict, regMuertas: dict, numFil, numCol):
                 else:
                     regMuertas[bucle] = regMuertas[bucle]+1
             else:
-                #si el vecino es un viva, agrego uno a mi.
+                #si el vecino es una viva, agrego uno a mi.
                 regVivas[i] = regVivas[i] +1
 
 def generarMatrizFinal(regVivas: dict, numFil, numCol):
+    #al final, genero la matriz analizando las celulas vivas que me quedaron.
     nuevaMatriz = []
     for i in range(numFil):
         aux = ''
         for k in range(numCol):
-            if(str(i)+','+str(k) in regVivas):
+            if((i,k) in regVivas):
                 aux+='*'
             else:
                 aux+='-'
@@ -78,16 +72,15 @@ def solucionar(arr,c):
         for k in range(numCol):
             #lleno las vivas.
             if(arr[i][k] == '*'):
-                regVivas[str(i)+','+str(k)] = 0
+                regVivas[(i,k)] = 0
     #empiezo con las iteraciones
     for iter in range(c):
         #en cada iteracion, las regMuertas empiezan de 0, y reinicio los contadores de las vivas
         regMuertas = {}
-        reiniciarContadorVivas(regVivas)
         calcularVivas_Muertas(regVivas, regMuertas, numFil, numCol)
         #ahora ya tengo las respectivas vivas y muertas que importan.
         #elimino las vivas que tengan vecinosvivos <2 o >3
-        eliminarVivas(regVivas)
+        eliminarYReiniciarVivas(regVivas)
         #ahora agrego al registro de las vivas: las celulas muertas que tengan 3 vecinos vivos.
         agregarNuevasVivas(regVivas,regMuertas)
     #ahora lleno la matriz final.

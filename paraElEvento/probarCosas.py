@@ -81,9 +81,14 @@
 
 # print(holaDic)
 
-a = 1
-b = 3
-holaDic = {}
-holaDic [(a,b)] = 0
+# a = 1
+# b = 3
+# holaDic = {}
+# holaDic [(a,b)] = 0
 
-print(holaDic)
+# print(holaDic)
+
+
+hola = (1,3)
+
+print(hola[0])
